@@ -59,8 +59,8 @@ fi
 # Populating overcloud elements
 echo "#######################################################"
 echo -n "$(date) - Setting up test environment vars..."
-HATESTDIR=/tmp/overcloud-ha-test-suite
-HATEST=overcloud-ha-test-suite.sh
+HATESTDIR=/tmp/tripleo-director-ha-test-suite
+HATEST=TD-ha-test-suite.sh
 OVERCLOUD_USER="heat-admin"
 declare -A controllers
 for LINE in $(nova list | awk '/overcloud-controller-/{gsub("ctlplane=",""); print $4"#"$12}')
@@ -75,11 +75,7 @@ echo "#######################################################"
 # Getting overcloud-ha-test-suite
 echo "$(date) - Getting overcloud-ha-test-suite..."
 rm -rf $HATESTDIR
-git clone https://github.com/rscarazz/openstack/ $HATESTDIR
-pushd $HATESTDIR
-git filter-branch --prune-empty --subdirectory-filter overcloud-ha-test-suite HEAD;
-rm -rf .git
-popd
+git clone https://github.com/rscarazz/tripleo-director-ha-test-suite/ $HATESTDIR
 echo "OK"
 
 echo "#######################################################"
