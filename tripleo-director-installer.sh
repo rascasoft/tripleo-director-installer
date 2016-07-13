@@ -103,3 +103,9 @@ $SSH stack@$UNDERCLOUDIP ./overcloud-deploy.sh
 echo "###############################################"
 echo "$(date) Starting overcloud post operations"
 $SSH stack@$UNDERCLOUDIP ./overcloud-post.sh
+
+echo "###############################################"
+echo "$(date) Getting sosreports"
+LOGDIR=$PWD/$(date -s)_$OPENSTACK_VERSION
+mkdir -p $LOGDIR
+$SCP stack@$UNDERCLOUDIP:/tmp/sosreports/* $LOGDIR/
