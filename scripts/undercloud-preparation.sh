@@ -1,9 +1,17 @@
 #!/bin/bash
 
 echo "###############################################"
-echo "$(date) Configuring user"
+echo "$(date) Disabling Firewall and SELinux"
 
+# SELinux
 setenforce 0
+sed -i -e 's/^SELINUX.*/SELINUX=permissive/g' /etc/sysconfig/selinux
+
+# Firewall
+systemctl disable firewalld
+
+echo "###############################################"
+echo "$(date) Configuring user"
 
 useradd stack
 echo stack | passwd --stdin stack
@@ -23,7 +31,7 @@ sed -i "s/^Defaults.*requiretty/#Defaults requiretty/" /etc/sudoers
 echo "###############################################"
 echo "$(date) Configuring packages"
 
-yum install -y ntp vim tmux openssl wget ntp ntpdate bind-utils net-tools tmux vim git lftp
+yum install -y vim tmux openssl wget ntp ntpdate bind-utils net-tools git lftp sos
 yum erase -y chrony
 rm -f /etc/chrony* 
 sed -i s/^server.*// /etc/ntp.conf
