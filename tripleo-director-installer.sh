@@ -106,6 +106,6 @@ $SSH stack@$UNDERCLOUDIP ./overcloud-post.sh
 
 echo "###############################################"
 echo "$(date) Getting sosreports"
-LOGDIR=$PWD/$(date -s)_$OPENSTACK_VERSION
+LOGDIR=$ENVIRONMENTDIR/TDi_$OPENSTACK_VERSION\_$(date +%s)
 mkdir -p $LOGDIR
 $SCP stack@$UNDERCLOUDIP:/tmp/sosreports/* $LOGDIR/
