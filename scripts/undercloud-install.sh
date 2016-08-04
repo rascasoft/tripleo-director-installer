@@ -33,10 +33,21 @@ function parse_yaml {
    }'
 }
 
-eval $(parse_yaml network-environment.yaml)
 
-# Creating device for accessing external API network from undercloud
-sudo ovs-vsctl add-port br-ctlplane vlan$parameter_defaults_ExternalNetworkVlanID tag=$parameter_defaults_ExternalNetworkVlanID -- set interface vlan$parameter_defaults_ExternalNetworkVlanID type=internal
-sudo ip link set dev vlan$parameter_defaults_ExternalNetworkVlanID up
-sudo ip addr add $parameter_defaults_ExternalInterfaceDefaultRoute/24 dev vlan$parameter_defaults_ExternalNetworkVlanID
-sudo iptables -A BOOTSTACK_MASQ -s $parameter_defaults_ExternalNetCidr ! -d $parameter_defaults_ExternalNetCidr -j MASQUERADE -t nat
+if [ "x$IPV6_ENABLE" != "x" ]
+ then
+  eval $(parse_yaml network-environment-v6.yaml)
+  # Creating device for accessing external API network from undercloud
+  sudo ovs-vsctl add-port br-ctlplane vlan$parameter_defaults_ExternalNetworkVlanID tag=$parameter_defaults_ExternalNetworkVlanID -- set interface vlan$parameter_defaults_ExternalNetworkVlanID type=internal
+  sudo ip link set dev vlan$parameter_defaults_ExternalNetworkVlanID up
+  sudo ip -6 addr add $parameter_defaults_ExternalInterfaceDefaultRoute/64 dev vlan$parameter_defaults_ExternalNetworkVlanID
+  sudo iptables -A POSTROUTING -s $parameter_defaults_ExternalNetCidr ! -d $parameter_defaults_ExternalNetCidr -j MASQUERADE -t nat
+ else 
+  eval $(parse_yaml network-environment.yaml)
+  # Creating device for accessing external API network from undercloud
+  sudo ovs-vsctl add-port br-ctlplane vlan$parameter_defaults_ExternalNetworkVlanID tag=$parameter_defaults_ExternalNetworkVlanID -- set interface vlan$parameter_defaults_ExternalNetworkVlanID type=internal
+  sudo ip link set dev vlan$parameter_defaults_ExternalNetworkVlanID up
+  sudo ip addr add $parameter_defaults_ExternalInterfaceDefaultRoute/24 dev vlan$parameter_defaults_ExternalNetworkVlanID
+  sudo iptables -A BOOTSTACK_MASQ -s $parameter_defaults_ExternalNetCidr ! -d $parameter_defaults_ExternalNetCidr -j MASQUERADE -t nat
+fi
+

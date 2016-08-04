@@ -39,6 +39,9 @@ source stackrc
 # If LIGHTWEIGHT is enabled, change DEPLOY_ARGS
 [ "x$LIGHTWEIGHT" != "x" ] && DEPLOY_ARGS="-e /home/stack/wip-mitaka-lightweight-arch -e /home/stack/wip-mitaka-lightweight-arch/environments/puppet-pacemaker.yaml -e /home/stack/wip-mitaka-lightweight-arch/environments/network-isolation.yaml -e /home/stack/wip-mitaka-lightweight-arch/environments/net-single-nic-with-vlans.yaml"
 
+# If IPV6 is enabled, change DEPLOY_ARGS
+[ "x$IPV6_ENABLE" != "x" ] && DEPLOY_ARGS="-e /usr/share/openstack-tripleo-heat-templates/environments/puppet-pacemaker.yaml -e /usr/share/openstack-tripleo-heat-templates/environments/network-isolation-v6.yaml -e /usr/share/openstack-tripleo-heat-templates/environments/net-single-nic-with-vlans-v6.yaml -e /home/stack/network-environment-v6.yaml "
+
 # Mitaka workaround otherwise overcloud deploy will fail
 if [ "$OPENSTACK_VERSION" == "mitaka" ]
  then

@@ -8,6 +8,7 @@ WORKINGDIR=$(dirname $0)
 : ${INTROSPECTION_PRE_SCRIPT:=""}
 : ${INTROSPECTION_POST_SCRIPT:=""}
 : ${SSL_ENABLE:=""}
+: ${IPV6_ENABLE:=""}
 
 if [ $? -eq 0 ]
  then
@@ -46,7 +47,19 @@ $SSH root@$UNDERCLOUDIP ./undercloud-repos-$OPENSTACK_VERSION\.sh
 
 echo "###############################################"
 echo "$(date) Uploading undercloud scripts $UNDERCLOUD (stack)"
-$SCP -r tests scripts/undercloud-install.sh scripts/overcloud-{images-$OPENSTACK_VERSION,introspection,deploy,post}.sh scripts/{opensink,follow-events.py} $ENVIRONMENTDIR/{environment,undercloud.conf,instackenv.json,network-environment.yaml,nic-configs} stack@$UNDERCLOUDIP:
+$SCP -r tests scripts/undercloud-install.sh scripts/overcloud-{images-$OPENSTACK_VERSION,introspection,deploy,post}.sh scripts/{opensink,follow-events.py} $ENVIRONMENTDIR/{environment,undercloud.conf,instackenv.json,nic-configs} stack@$UNDERCLOUDIP:
+
+# If IPV6 is enabled copy files
+if [ "x$IPV6_ENABLE" != "x" ]
+ then
+  echo "###############################################"
+  echo "$(date) Uploading IPV6 configuration $UNDERCLOUD (stack)"
+  $SCP $ENVIRONMENTDIR/network-environment-v6.yaml stack@$UNDERCLOUDIP:
+ else 
+  echo "###############################################"
+  echo "$(date) Uploading IPV4 configuration $UNDERCLOUD (stack)"
+  $SCP $ENVIRONMENTDIR/network-environment.yaml stack@$UNDERCLOUDIP:
+fi
 
 # If SSL is enabled copy files
 if [ "x$SSL_ENABLE" != "x" ]
