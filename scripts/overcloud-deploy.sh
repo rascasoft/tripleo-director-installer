@@ -33,6 +33,7 @@ source stackrc
 
 : ${LIGHTWEIGHT:=""}
 : ${SSL_ENABLE:=""}
+: ${IPV6_ENABLE:=""}
 : ${DEPLOY_ARGS:="-e /usr/share/openstack-tripleo-heat-templates/environments/puppet-pacemaker.yaml -e /usr/share/openstack-tripleo-heat-templates/environments/network-isolation.yaml -e /usr/share/openstack-tripleo-heat-templates/environments/net-single-nic-with-vlans.yaml -e /home/stack/network-environment.yaml"}
 : ${DEPLOY_EXTRA_ARGS:="--neutron-bridge-mappings datacentre:br-floating"}
 
