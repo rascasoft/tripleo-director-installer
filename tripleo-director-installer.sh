@@ -39,15 +39,15 @@ $SCP -r scripts/undercloud-{preparation,repos-$OPENSTACK_VERSION}.sh root@$UNDER
 
 echo "###############################################"
 echo "$(date) Starting undercloud preparation in $UNDERCLOUD"
-$SSH root@$UNDERCLOUDIP ./undercloud-preparation.sh $UNDERCLOUD
-
-echo "###############################################"
-echo "$(date) Configuring undercloud repositories in $UNDERCLOUD"
-$SSH root@$UNDERCLOUDIP ./undercloud-repos-$OPENSTACK_VERSION\.sh
+$SSH root@$UNDERCLOUDIP ./undercloud-preparation.sh $UNDERCLOUDIP
 
 echo "###############################################"
 echo "$(date) Uploading undercloud scripts $UNDERCLOUD (stack)"
 $SCP -r tests scripts/undercloud-install.sh scripts/overcloud-{images,introspection,deploy,post}.sh scripts/{opensink,follow-events.py} $ENVIRONMENTDIR/{environment,undercloud.conf,instackenv.json,nic-configs} stack@$UNDERCLOUDIP:
+
+echo "###############################################"
+echo "$(date) Configuring undercloud repositories in $UNDERCLOUD"
+$SSH stack@$UNDERCLOUDIP ./undercloud-repos.sh
 
 # If IPV6 is enabled copy files
 if [ "x$IPV6_ENABLE" != "x" ]
