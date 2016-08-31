@@ -47,7 +47,7 @@ $SSH root@$UNDERCLOUDIP ./undercloud-repos-$OPENSTACK_VERSION\.sh
 
 echo "###############################################"
 echo "$(date) Uploading undercloud scripts $UNDERCLOUD (stack)"
-$SCP -r tests scripts/undercloud-install.sh scripts/overcloud-{images-$OPENSTACK_VERSION,introspection,deploy,post}.sh scripts/{opensink,follow-events.py} $ENVIRONMENTDIR/{environment,undercloud.conf,instackenv.json,nic-configs} stack@$UNDERCLOUDIP:
+$SCP -r tests scripts/undercloud-install.sh scripts/overcloud-{images,introspection,deploy,post}.sh scripts/{opensink,follow-events.py} $ENVIRONMENTDIR/{environment,undercloud.conf,instackenv.json,nic-configs} stack@$UNDERCLOUDIP:
 
 # If IPV6 is enabled copy files
 if [ "x$IPV6_ENABLE" != "x" ]
@@ -76,7 +76,7 @@ $SSH stack@$UNDERCLOUDIP ./undercloud-install.sh
 
 echo "###############################################"
 echo "$(date) Starting overcloud image generation (user stack)"
-$SSH stack@$UNDERCLOUDIP ./overcloud-images-$OPENSTACK_VERSION\.sh
+$SSH stack@$UNDERCLOUDIP ./overcloud-images.sh
 
 # If introspectin pre script is declared, we execute it now
 if [ "x$INTROSPECTION_PRE_SCRIPT" != "x" ]
