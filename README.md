@@ -58,7 +58,7 @@ Most of the options explain themselves by their name. In any case this list desc
 
 - **UNDERCLOUD**: fqdn of the undercloud machine
 - **UNDERCLOUDIP**: ip address of the undercloud machine
-- **OPENSTACK_VERSION**: which version should the script install, choose from **ops7**, **osp8**, **liberty ** and **mitaka**
+- **OPENSTACK_VERSION**: which version should the script install, choose from **ops7**, **osp8**, **osp9**, **liberty** and **mitaka**
 - **SSH**: default command line to call ssh
 - **SCP**: default command line to call scp
 - **CONTROLLER**: number of controller nodes to be deployed
