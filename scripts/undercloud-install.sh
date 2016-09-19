@@ -10,7 +10,7 @@ if [ "$OPENSTACK_VERSION" == "osp8" ]
 fi
 
 echo "$(date) Undercloud installlation"
-time openstack undercloud install
+time openstack undercloud install 2>&1 | tee undercloud_install.log
 [ $? -ne 0 ] && exit 1
 
 echo "###############################################"

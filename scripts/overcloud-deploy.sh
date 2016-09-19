@@ -86,7 +86,7 @@ parameter_defaults:
 EOENV
 
 openstack overcloud deploy --libvirt-type=kvm --ntp-server 10.5.26.10 --control-scale $CONTROLLERS --compute-scale $COMPUTES --ceph-storage-scale $STORAGE --block-storage-scale 0 --swift-storage-scale 0 --control-flavor baremetal --compute-flavor baremetal --ceph-storage-flavor baremetal --block-storage-flavor baremetal --swift-storage-flavor baremetal --templates $DEPLOY_ARGS $SSL_ENABLE $DEPLOY_EXTRA_ARGS \
-    ${DEPLOY_ENV_YAML:+-e $DEPLOY_ENV_YAML} || /bin/true
+    ${DEPLOY_ENV_YAML:+-e $DEPLOY_ENV_YAML} 2>&1 | tee overcloud_deploy.log || /bin/true
 
 overcloud_status=$(heat stack-list | grep overcloud | awk '{print $6}')
 if [ "$overcloud_status" == "CREATE_COMPLETE" ]

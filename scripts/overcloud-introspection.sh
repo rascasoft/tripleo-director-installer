@@ -23,7 +23,7 @@ echo "$(date) Configuring boot for introspection"
 openstack baremetal configure boot
 
 echo "$(date) Introspectioning..."
-openstack baremetal introspection bulk start
+openstack baremetal introspection bulk start 2>&1 | tee overcloud_introspection.log
 
 echo "$(date) Creating flavor baremetal"
 openstack flavor create --id auto --ram 4096 --disk 40 --vcpus 4 baremetal || true
