@@ -9,21 +9,23 @@ source stackrc
 case $OPENSTACK_VERSION in
 "mitaka") IMAGE_URL="https://ci.centos.org/artifacts/rdo/images/mitaka/delorean/stable/"
           ;;
-"osp9") IMAGE_URL="http://rhos-release.virt.bos.redhat.com/puddle-images/9.0/latest-images/"
+"osp9") IMAGE_URL="http://rhos-release.virt.bos.redhat.com/puddle-images/latest-9.0-images/"
         ;;
-"osp8") IMAGE_URL="http://rhos-release.virt.bos.redhat.com/puddle-images/8.0/latest-images/"
+"osp8") IMAGE_URL="http://rhos-release.virt.bos.redhat.com/puddle-images/latest-8.0-images/"
         ;;
-"osp7") IMAGE_URL="http://rhos-release.virt.bos.redhat.com/puddle-images/7.3.1-GA/images/"
+"osp7") IMAGE_URL="http://rhos-release.virt.bos.redhat.com/puddle-images/latest-7.0-images/"
         ;;
 esac
 
 echo "$(date) Retrieving images"
 source stackrc
+[ -d ~/images ] && rm -rf ~/images
 mkdir ~/images
 cd ~/images
 lftp $IMAGE_URL << EOF
 get overcloud-full.tar
 get deploy-ramdisk-ironic.tar
+get discovery-ramdisk.tar
 get ironic-python-agent.tar
 quit 0
 EOF
@@ -34,9 +36,8 @@ done
 echo "$(date) Installing libguestfs-tools"
 sudo yum -y install libguestfs-tools.noarch
 
-echo "$(date) Checking libvirtd"
-sudo systemctl is-active libvirtd &> /dev/null
-[ $? -ne 0 ] && sudo systemctl restart libvirtd
+echo "$(date) Restarting libvirtd"
+sudo systemctl restart libvirtd
 
 echo "$(date) Changing root password of the overcloud"
 virt-customize -a overcloud-full.qcow2 --root-password password:redhat
