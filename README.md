@@ -67,4 +67,5 @@ Most of the options explain themselves by their name. In any case this list desc
 - **FLOATING_SUBNET**, **FLOATING_RANGE_START**, **FLOATING_RANGE_END**, **FLOATING_GW**: floating newtok details
 - **PROVISION_SCRIPT**: name of the script that will be *eventually* launched before accessing the undercloud for the first time. This script must be present in the environment directory.
 - **INTROSPECTION_POST_SCRIPT**: name of the script that will be *eventually* launched after the introspection process. This script must be present in the environment directory.
-- **SSL_ENABLE**: enable SSL. If you want to enable SSL you will need additional files (see SSL section)
+- **IPV6_ENABLE**: enable IPV6. If you want to enable IPV6 you will need a network-environment-v6.yaml file.
+- **SSL_ENABLE**: enable SSL. If you want to enable SSL you will need additional files (see SSL section).
