@@ -6,8 +6,6 @@ set -eux
 
 source environment
 
-source stackrc 
-
 sudo yum update -y
 
 if [ "$OPENSTACK_VERSION" == "mitaka" ]
@@ -17,7 +15,7 @@ if [ "$OPENSTACK_VERSION" == "mitaka" ]
   sudo ./tripleo-ci/scripts/tripleo.sh --repo-setup
   sudo yum -y install yum-plugin-priorities python-tripleoclient
  else
-  sudo yum install -y http://rhos-release.virt.bos.redhat.com/repos/rhos-release/rhos-release-latest.noarch.rpm
+  sudo yum localinstall -y http://rhos-release.virt.bos.redhat.com/repos/rhos-release/rhos-release-latest.noarch.rpm
   # To pick a specific release
   #rhos-release -p Y3.1 7-director -r 7.2
   #rhos-release -p Z4 7
