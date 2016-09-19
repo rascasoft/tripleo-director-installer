@@ -5,7 +5,9 @@ set -eux
 source stackrc
 
 echo "$(date) Uploading images"
-openstack overcloud image upload --image-path /home/stack/images/ 
+pushd ~/images
+openstack overcloud image upload --image-path ~/images/
+popd
 
 echo "$(date) Updating neutron subnet with DNS"
 netid=$(neutron subnet-list | grep -v "+" |grep -v cidr | awk '{print $2}')
