@@ -35,15 +35,15 @@ fi
 
 echo "###############################################"
 echo "$(date) Uploading undercloud preparation scripts $UNDERCLOUD (root)"
-$SCP -r scripts/undercloud-{preparation,repos-$OPENSTACK_VERSION}.sh root@$UNDERCLOUDIP:
+$SCP -r scripts/undercloud-preparation.sh root@$UNDERCLOUDIP:
 
 echo "###############################################"
 echo "$(date) Starting undercloud preparation in $UNDERCLOUD"
-$SSH root@$UNDERCLOUDIP ./undercloud-preparation.sh $UNDERCLOUDIP
+$SSH root@$UNDERCLOUDIP ./undercloud-preparation.sh $UNDERCLOUD
 
 echo "###############################################"
 echo "$(date) Uploading undercloud scripts $UNDERCLOUD (stack)"
-$SCP -r tests scripts/undercloud-install.sh scripts/overcloud-{images,introspection,deploy,post}.sh scripts/{opensink,follow-events.py} $ENVIRONMENTDIR/{environment,undercloud.conf,instackenv.json,nic-configs} stack@$UNDERCLOUDIP:
+$SCP -r tests scripts/undercloud-{install,repos}.sh scripts/overcloud-{images,introspection,deploy,post}.sh scripts/{opensink,follow-events.py} $ENVIRONMENTDIR/{environment,undercloud.conf,instackenv.json,nic-configs} stack@$UNDERCLOUDIP:
 
 echo "###############################################"
 echo "$(date) Configuring undercloud repositories in $UNDERCLOUD"
