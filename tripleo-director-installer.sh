@@ -30,7 +30,7 @@ if [ "x$PROVISION_SCRIPT" != "x" ]
  then
   echo "###############################################"
   echo "$(date) Provisioning $UNDERCLOUD (root)"
-  $ENVIRONMENTDIR/$PROVISION_SCRIPT
+  $PROVISION_SCRIPT
 fi
 
 echo "###############################################"
