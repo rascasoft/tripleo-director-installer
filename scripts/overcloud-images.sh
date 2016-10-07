@@ -39,8 +39,8 @@ sudo yum -y install libguestfs-tools.noarch
 echo "$(date) Restarting libvirtd"
 sudo systemctl restart libvirtd
 
-echo "$(date) Changing root password of the overcloud"
-virt-customize -a overcloud-full.qcow2 --root-password password:redhat
+echo "$(date) Updating packages on overcloud image and changing root password"
+virt-customize --verbose -a overcloud-full.qcow2 --selinux-relabel --root-password password:redhat --run-command 'yum localinstall -y http://rhos-release.virt.bos.redhat.com/repos/rhos-release/rhos-release-latest.noarch.rpm http://rhos-release.virt.bos.redhat.com/repos/rhos-release/extras/7/wget-1.14-9.el7.x86_64.rpm http://rhos-release.virt.bos.redhat.com/repos/rhos-release/extras/7/yum-utils-1.1.31-29.el7.noarch.rpm' --run-command 'rhos-release -p latest 7' --run-command 'yum -y -v update > /tmp/yum-update.log 2>&1' --run-command 'rhos-release -x' --run-command 'yum remove -y rhos-release wget yum-utils' || /bin/true
 
 # To generate mitaka images:
 #export NODE_DIST=centos7
