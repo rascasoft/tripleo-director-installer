@@ -9,6 +9,8 @@ source stackrc
 case $OPENSTACK_VERSION in
 "mitaka") IMAGE_URL="https://ci.centos.org/artifacts/rdo/images/mitaka/delorean/stable/"
           ;;
+"osp10") IMAGE_URL="http://rhos-release.virt.bos.redhat.com/ci-images/rhos-10/current-passed-ci/"
+        ;;
 "osp9") IMAGE_URL="http://rhos-release.virt.bos.redhat.com/ci-images/rhos-9/current-passed-ci/"
         ;;
 "osp8") IMAGE_URL="http://rhos-release.virt.bos.redhat.com/ci-images/rhos-8/current-passed-ci/"
@@ -40,8 +42,13 @@ echo "$(date) Restarting libvirtd"
 sudo systemctl restart libvirtd
 
 echo "$(date) Updating DNS and packages on overcloud image and changing root password"
-virt-copy-in -a ./overcloud-full.qcow2 /etc/resolv.conf /etc/
-virt-customize --verbose -a overcloud-full.qcow2 --selinux-relabel --root-password password:redhat --run-command 'yum localinstall -y http://rhos-release.virt.bos.redhat.com/repos/rhos-release/rhos-release-latest.noarch.rpm http://rhos-release.virt.bos.redhat.com/repos/rhos-release/extras/7/wget-1.14-9.el7.x86_64.rpm http://rhos-release.virt.bos.redhat.com/repos/rhos-release/extras/7/yum-utils-1.1.31-29.el7.noarch.rpm' --run-command 'rhos-release -p latest 7' --run-command 'yum -y -v update > /tmp/yum-update.log 2>&1' --run-command 'rhos-release -x' --run-command 'yum remove -y rhos-release wget yum-utils' || /bin/true
+case $OPENSTACK_VERSION in
+"mitaka"|"osp8"|"osp9"|"osp10") virt-customize --verbose -a overcloud-full.qcow2 --root-password password:redhat
+                                ;;
+"osp7") export LIBGUESTFS_BACKEND=direct
+        sudo -E bash -c "virt-customize --verbose -a overcloud-full.qcow2 --selinux-relabel --memsize 8192 --smp 4 --root-password password:redhat --run-command 'yum localinstall -y http://rhos-release.virt.bos.redhat.com/repos/rhos-release/rhos-release-latest.noarch.rpm http://rhos-release.virt.bos.redhat.com/repos/rhos-release/extras/7/wget-1.14-9.el7.x86_64.rpm http://rhos-release.virt.bos.redhat.com/repos/rhos-release/extras/7/yum-utils-1.1.31-29.el7.noarch.rpm' --run-command 'rhos-release -p latest 7' --run-command 'yum -y -v update > /tmp/yum-update.log 2>&1' --run-command 'rhos-release -x' --run-command 'yum remove -y rhos-release wget yum-utils'" || /bin/true
+        ;;
+esac
 
 # To generate mitaka images:
 #export NODE_DIST=centos7
@@ -67,4 +74,3 @@ virt-customize --verbose -a overcloud-full.qcow2 --selinux-relabel --root-passwo
 #export DIB_LOCAL_IMAGE=rhel-guest-image-7.2-20151102.0.x86_64.qcow2
 #export DIB_YUM_REPO_CONF="/etc/yum.repos.d/rhos-release-8.repo  /etc/yum.repos.d/rhos-release-rhel-7.2.repo /etc/yum.repos.d/rhos-release-8-director.repo"
 #openstack overcloud image build --all
-#!/bin/bash

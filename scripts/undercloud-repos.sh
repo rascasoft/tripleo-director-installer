@@ -20,13 +20,16 @@ if [ "$OPENSTACK_VERSION" == "mitaka" ]
   #rhos-release -p Y3.1 7-director -r 7.2
   #rhos-release -p Z4 7
   case $OPENSTACK_VERSION in
-  "osp9") sudo rhos-release -P 9-director
+  "osp10") sudo rhos-release -p latest 9-director
           sudo yum install -y python-tripleoclient
           ;;
-  "osp8") sudo rhos-release -P 8-director
+  "osp9") sudo rhos-release -p latest 9-director
           sudo yum install -y python-tripleoclient
           ;;
-  "osp7") sudo rhos-release -P 7-director
+  "osp8") sudo rhos-release -p latest 8-director
+          sudo yum install -y python-tripleoclient
+          ;;
+  "osp7") sudo rhos-release -p latest 7-director
           sudo yum install -y python-rdomanager-oscplugin
           ;;
   esac
