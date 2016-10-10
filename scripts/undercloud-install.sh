@@ -3,11 +3,11 @@
 source environment
 
 # OSP8 workaround otherwise undercloud installation will fail
-if [ "$OPENSTACK_VERSION" == "osp8" ]
- then
-  sudo rpm -Uvh http://download.devel.redhat.com/brewroot/packages/instack-undercloud/2.2.1/2.el7ost/noarch/instack-undercloud-2.2.1-2.el7ost.noarch.rpm
-  sudo yum -y install selinux-policy-devel
-fi
+#if [ "$OPENSTACK_VERSION" == "osp8" ]
+# then
+#  sudo rpm -Uvh http://download.devel.redhat.com/brewroot/packages/instack-undercloud/2.2.1/2.el7ost/noarch/instack-undercloud-2.2.1-2.el7ost.noarch.rpm
+#  sudo yum -y install selinux-policy-devel
+#fi
 
 echo "$(date) Undercloud installlation"
 time openstack undercloud install 2>&1 | tee undercloud_install.log
