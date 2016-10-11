@@ -46,7 +46,7 @@ case $OPENSTACK_VERSION in
 "mitaka"|"osp8"|"osp9"|"osp10") virt-customize --verbose -a overcloud-full.qcow2 --root-password password:redhat
                                 ;;
 "osp7") export LIBGUESTFS_BACKEND=direct
-        sudo -E bash -c "virt-customize --verbose -a overcloud-full.qcow2 --selinux-relabel --memsize 8192 --smp 4 --root-password password:redhat --run-command 'yum localinstall -y http://rhos-release.virt.bos.redhat.com/repos/rhos-release/rhos-release-latest.noarch.rpm http://rhos-release.virt.bos.redhat.com/repos/rhos-release/extras/7/wget-1.14-9.el7.x86_64.rpm http://rhos-release.virt.bos.redhat.com/repos/rhos-release/extras/7/yum-utils-1.1.31-29.el7.noarch.rpm' --run-command 'rhos-release -p latest 7' --run-command 'yum -y -v update > /tmp/yum-update.log 2>&1' --run-command 'rhos-release -x' --run-command 'yum remove -y rhos-release wget yum-utils'" || /bin/true
+        sudo -E bash -c "virt-customize --verbose -a overcloud-full.qcow2 --selinux-relabel --memsize 8192 --smp 4 --root-password password:redhat --run-command 'yum localinstall -y http://rhos-release.virt.bos.redhat.com/repos/rhos-release/rhos-release-latest.noarch.rpm http://rhos-release.virt.bos.redhat.com/repos/rhos-release/extras/7/wget-1.14-9.el7.x86_64.rpm http://rhos-release.virt.bos.redhat.com/repos/rhos-release/extras/7/yum-utils-1.1.31-29.el7.noarch.rpm' --run-command 'rhos-release -p latest 7' --run-command 'yum -y -v update > /tmp/yum-update.log 2>&1'" || /bin/true
         ;;
 esac
 
