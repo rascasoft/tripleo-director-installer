@@ -13,9 +13,9 @@ WORKINGDIR=$(dirname $0)
 if [ $? -eq 0 ]
  then
   export ENVIRONMENTDIR=$1
-  if [ "$OPENSTACK_VERSION" != "osp8" -a "$OPENSTACK_VERSION" != "osp7" -a "$OPENSTACK_VERSION" != "osp9" -a "$OPENSTACK_VERSION" != "mitaka" ]
+  if [ "$OPENSTACK_VERSION" != "osp8" -a "$OPENSTACK_VERSION" != "osp7" -a "$OPENSTACK_VERSION" != "osp9" -a "$OPENSTACK_VERSION" != "osp10" -a "$OPENSTACK_VERSION" != "mitaka" ]
    then
-    echo "OPENSTACK_VERSION must be 'osp7', 'osp8', 'osp9' or 'mitaka'."
+    echo "OPENSTACK_VERSION must be 'osp7', 'osp8', 'osp9', 'osp10' or 'mitaka'."
     exit 1
   fi
  else
