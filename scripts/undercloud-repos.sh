@@ -20,7 +20,7 @@ if [ "$OPENSTACK_VERSION" == "mitaka" ]
   #rhos-release -p Y3.1 7-director -r 7.2
   #rhos-release -p Z4 7
   case $OPENSTACK_VERSION in
-  "osp10") sudo rhos-release -p latest 9-director
+  "osp10") sudo rhos-release -p latest 10-director
           sudo yum install -y python-tripleoclient
           ;;
   "osp9") sudo rhos-release -p latest 9-director
