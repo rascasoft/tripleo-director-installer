@@ -31,7 +31,13 @@ openstack flavor create --id auto --ram 4096 --disk 40 --vcpus 4 baremetal || tr
 echo "$(date) Updating capabilities of flavor baremetal"
 openstack flavor set --property "cpu_arch"="x86_64" --property "capabilities:boot_option"="local" --property "capabilities:profile"="baremetal" baremetal
 
-ids="$(ironic node-list --detail | grep pxe_ipmi | awk '{print $(NF-3)}')"
+case $OPENSTACK_VERSION in
+"osp10") ids="$(openstack baremetal node list --fields uuid driver | grep pxe_ipmi | awk '{ print $2 }')"
+                  ;;
+"osp7"|"osp8"|"osp9"|"mitaka") ids="$(ironic node-list --detail | grep pxe_ipmi | awk '{print $(NF-3)}')"
+                      ;;
+esac
+
 for i in $ids; do
   ironic node-update $i add properties/capabilities='profile:baremetal,boot_option:local'
 done
