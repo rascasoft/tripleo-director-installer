@@ -2,6 +2,8 @@
 
 set -eux
 
+source environment
+
 source stackrc
 
 echo "$(date) Uploading images"
