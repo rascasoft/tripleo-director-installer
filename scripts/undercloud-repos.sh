@@ -23,7 +23,9 @@ if [ "$OPENSTACK_VERSION" == "mitaka" ]
   "osp10") sudo rhos-release -p latest 10-director
            #sudo yum install -y python-tripleoclient
            # Workaround for bug https://bugzilla.redhat.com/show_bug.cgi?id=1382956
-           sudo yum localinstall http://buildlogs.centos.org/centos/7/cloud/x86_64/openstack-newton/python-tripleoclient-5.2.1-0.1.34590ccgit.el7.noarch.rpm
+           sudo yum -y localinstall http://buildlogs.centos.org/centos/7/cloud/x86_64/openstack-newton/python-tripleoclient-5.2.1-0.1.34590ccgit.el7.noarch.rpm
+           # Workaround for bug https://bugzilla.redhat.com/show_bug.cgi?id=1385470
+           sudo yum -y localinstall http://trunk.rdoproject.org/centos7-newton/current/openstack-tripleo-common-5.2.1-0.20161015221239.3163e51.el7.centos.noarch.rpm
           ;;
   "osp9") sudo rhos-release -p latest 9-director
           sudo yum install -y python-tripleoclient
