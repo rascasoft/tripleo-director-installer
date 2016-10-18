@@ -1,0 +1,6 @@
+overcloud-controller-0|test_check-failed-actions
+overcloud-controller-0|test_master-slave|recovery_master-slave
+overcloud-controller-0|test_pacemaker-light-a|recovery_pacemaker-light
+overcloud-controller-0|test_pacemaker-light-b|recovery_pacemaker-light
+overcloud-controller-0|test_pacemaker-light-c|recovery_pacemaker-light
+undercloud|test_instance-creation|recovery_instance-creation
