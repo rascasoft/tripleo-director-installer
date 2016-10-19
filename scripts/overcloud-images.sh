@@ -9,8 +9,8 @@ source stackrc
 case $OPENSTACK_VERSION in
 "mitaka") IMAGE_URL="https://ci.centos.org/artifacts/rdo/images/mitaka/delorean/stable/"
           ;;
-"osp10") #IMAGE_URL="http://rhos-release.virt.bos.redhat.com/ci-images/rhos-10/current-passed-ci/"
-         IMAGE_URL="http://rhos-release.virt.bos.redhat.com/ci-images/rhos-10/2016-10-07.4/"
+"osp10") IMAGE_URL="http://rhos-release.virt.bos.redhat.com/ci-images/rhos-10/current-passed-ci/"
+         #IMAGE_URL="http://rhos-release.virt.bos.redhat.com/ci-images/rhos-10/2016-10-07.4/"
          ;;
 "osp9") IMAGE_URL="http://rhos-release.virt.bos.redhat.com/ci-images/rhos-9/current-passed-ci/"
         ;;
