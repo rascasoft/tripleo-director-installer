@@ -1,3 +1,6 @@
+# Important : deprecation notice
+This project is now part of the OpenStack project [tripleo-ha-utils](https://github.com/openstack/tripleo-ha-utils). All the stuff in this repository must be considered deprecated.
+
 # OpenStack TripleO / Director installer
 This project automates all the stuff that needs to be done to deploy a complete environment via TripleO upstream or Red Hat OpenStack Director (OSPd), typically on baremetal.
 
